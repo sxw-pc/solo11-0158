@@ -1,0 +1,5 @@
+{"events":[
+{"id":"Q2","kind":"complaint","facility_id":"wc-a","at":"2026-04-01T13:00:00","category":"accessible","reporter":"resident-b"},
+{"id":"V2","kind":"verify","complaint_id":"Q2","inspector":"inspector-c","at":"2026-04-01T13:20:00","confirmed":true,"reason":"accessible stall damaged"},
+{"id":"R2","kind":"remedy","complaint_id":"Q2","worker":"worker-b","at":"2026-04-01T16:00:00","inspector":"worker-b","passed":true}
+]}

@@ -1,0 +1,5 @@
+{"events":[
+{"id":"Q1","kind":"complaint","facility_id":"wc-a","at":"2026-04-01T12:00:00","category":"cleanliness","reporter":"resident-a"},
+{"id":"V1","kind":"verify","complaint_id":"Q1","inspector":"inspector-c","at":"2026-04-01T12:20:00","confirmed":true,"reason":"floor and sink still dirty"},
+{"id":"R1","kind":"remedy","complaint_id":"Q1","worker":"worker-b","at":"2026-04-01T13:10:00","inspector":"inspector-d","passed":true}
+]}
