@@ -1,0 +1,10 @@
+{
+  "facility_id": "wc-a",
+  "opening_version": 2,
+  "intended_state": "closed",
+  "intended_text": "暂停开放",
+  "published_at_ms": 300,
+  "observation_end_ms": 2200,
+  "declared_epoch_first": 1,
+  "declared_epoch_last": 4
+}
