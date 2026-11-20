@@ -91,18 +91,53 @@ def reconcile_complaints(db,facility_id):
 
 def reconcile_notice(db,case_id,event_id=None):
     case=one(db,'SELECT * FROM notice_case WHERE id=?',(case_id,))
+    if not case:return
     review=one(db,'SELECT * FROM notice_review WHERE case_id=? ORDER BY at DESC,id DESC LIMIT 1',(case_id,))
-    if not case or not review:return
+    certification=one(db,'SELECT * FROM notice_certification WHERE case_id=? ORDER BY rowid DESC LIMIT 1',(case_id,))
+    # Manual independent reviews and browser-derived certifications are two
+    # intake paths into the same complaint ledger. Only the newest decision
+    # counts. An inconclusive certification (gaps only) withdraws any earlier
+    # browser conclusion and returns the complaint to pending, but can never
+    # override a manual independent review.
+    newest_manual_at=review['at'] if review else None
+    if certification and not certification['conclusive'] and (
+            newest_manual_at is None or certification['review_at']>newest_manual_at):
+        for c in all_rows(db,'SELECT * FROM complaint WHERE notice_case_id=?',(case_id,)):
+            reason='browser evidence withdrawn; declared epochs lack intact same-version evidence'
+            if (c['state'],c['reason'],c['due_at'])!=('pending',reason,None):
+                db.execute('UPDATE complaint SET state=?,reason=?,due_at=? WHERE id=?',
+                           ('pending',reason,None,c['id']))
+                log(db,'complaint',c['id'],'pending',reason,event_id)
+        return
+    decision=None
+    if review:
+        decision={'at':review['at'],'mismatch':bool(review['mismatch']),
+                  'source':'manual','order_id':review['id']}
+    if certification and certification['conclusive']:
+        auto={'at':certification['review_at'],'mismatch':bool(certification['mismatch']),
+              'source':'browser','order_id':certification['id']}
+        if decision is None or auto['at']>decision['at'] or (
+                auto['at']==decision['at'] and auto['order_id']>decision['order_id']):
+            decision=auto
+    if decision is None:return
     for c in all_rows(db,'SELECT * FROM complaint WHERE notice_case_id=?',(case_id,)):
-        if review['mismatch']:
+        if decision['mismatch']:
             contracts=all_rows(db,'SELECT * FROM contract WHERE facility_id=? AND starts<=? AND ends>? ORDER BY starts DESC,id',
                                (c['facility_id'],c['at'],c['at']))
             if contracts:
-                deadline=(datetime.fromisoformat(review['at'])+timedelta(minutes=contracts[0]['remedy_minutes'])).isoformat()
-                state,reason='confirmed','independent notice review found a mismatch'
+                deadline=(datetime.fromisoformat(decision['at'])+timedelta(minutes=contracts[0]['remedy_minutes'])).isoformat()
+                if decision['source']=='browser':
+                    state,reason='confirmed','browser capture certification found a notice mismatch'
+                else:
+                    state,reason='confirmed','independent notice review found a mismatch'
             else:
                 deadline=None;state,reason='pending_contract','notice mismatch without covering contract'
-        else:deadline=None;state,reason='rejected','independent notice review found alignment'
+        else:
+            deadline=None
+            if decision['source']=='browser':
+                state,reason='rejected','browser capture certification found the notice aligned'
+            else:
+                state,reason='rejected','independent notice review found alignment'
         if (c['state'],c['reason'],c['due_at'])!=(state,reason,deadline):
             db.execute('UPDATE complaint SET state=?,reason=?,due_at=? WHERE id=?',(state,reason,deadline,c['id']))
             log(db,'complaint',c['id'],state,reason,event_id)

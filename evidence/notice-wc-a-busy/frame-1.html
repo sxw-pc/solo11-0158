@@ -1,0 +1,31 @@
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <title>wc-a 服务公告本地样页</title>
+  <style>
+    body { font-family: sans-serif; margin: 3rem; }
+    .screen-reader-only { position: absolute; width: 1px; height: 1px; padding: 0;
+      margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    #visual-state { display: inline-block; padding: 1rem; font-size: 2rem; background: #eee; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>wc-a 公厕服务公告</h1>
+    <section id="notice" data-facility="wc-a" data-version="v2" data-epoch="4" aria-live="polite">
+      <span id="spoken-state" class="screen-reader-only">暂停开放</span>
+      <span id="visual-state" aria-hidden="true">暂停开放</span>
+    </section>
+  </main>
+  <script>
+    // Offline mock: two visual cache replays interrupt a correct closure notice.
+    const notice = document.querySelector('#notice');
+    const visual = document.querySelector('#visual-state');
+    setTimeout(() => { notice.dataset.version = 'v2'; notice.dataset.epoch = '1';
+      visual.textContent = '正常开放'; }, 300);
+    setTimeout(() => { notice.dataset.epoch = '2'; visual.textContent = '暂停开放'; }, 800);
+    setTimeout(() => { notice.dataset.epoch = '3'; visual.textContent = '正常开放'; }, 1300);
+    setTimeout(() => { notice.dataset.epoch = '4'; visual.textContent = '暂停开放'; }, 1800);
+  </script>
+
+
+</body></html>

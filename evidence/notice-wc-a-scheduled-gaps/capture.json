@@ -1,0 +1,121 @@
+{
+  "schema": "notice-capture/v2",
+  "page": "file:///workspace/mock/notice.html",
+  "mode": "observer",
+  "facility_id": "wc-a",
+  "opening_version": 2,
+  "intended_text": "暂停开放",
+  "intended_version": "v2",
+  "declared_epoch_first": 1,
+  "declared_epoch_last": 4,
+  "observation_window_ms": {
+    "published_at": 300,
+    "observation_end": 2200
+  },
+  "captured_at": "2026-11-20T23:23:38.952Z",
+  "browser": {
+    "product": "Chrome/159.0.8154.6",
+    "revision": "@98a2592026af8d673b9fa83b626ac68bdf4ae78a",
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36",
+    "executable": "/home/node/.cache/ms-playwright/chromium-1255/chrome-linux-arm64/chrome"
+  },
+  "schedule": [
+    2,
+    4
+  ],
+  "transitions": [
+    {
+      "version": "v2",
+      "epoch": "1",
+      "at": 310.7
+    },
+    {
+      "version": "v2",
+      "epoch": "2",
+      "at": 812.4
+    },
+    {
+      "version": "v2",
+      "epoch": "3",
+      "at": 1315.1
+    },
+    {
+      "version": "v2",
+      "epoch": "4",
+      "at": 1811.2
+    }
+  ],
+  "initial": {
+    "version": "v1",
+    "epoch": "0",
+    "at": 10.3
+  },
+  "monotonic": {
+    "ok": true,
+    "sequence": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "violations": []
+  },
+  "source_file": {
+    "name": "notice-source.json",
+    "sha256": "445a06776a14e5888787e2d0ef4cb9c970e1fd58c240089203ebf47deb8111db"
+  },
+  "frames": [
+    {
+      "epoch": 2,
+      "version": "v2",
+      "visual_text": "暂停开放",
+      "ax_static_text": [
+        "wc-a 公厕服务公告",
+        "暂停开放"
+      ],
+      "browser_clock_ms": 814.4,
+      "captured_at": "2026-11-20T23:23:37.912Z",
+      "elapsed_ms": 856,
+      "files": {
+        "screenshot": "epoch-2.png",
+        "dom": "epoch-2.html",
+        "ax_tree": "epoch-2.ax.json"
+      },
+      "screenshot_sha256": "5fcca3c2389e2fb40b7327af39f202a3eccdf5bb1cbb5de5ec66364b357eb748",
+      "dom_sha256": "eef1e2f8a21ea66a3a236a49c83fc920f17375e69e2c5a38d0997c7b58b61c5d",
+      "ax_tree_sha256": "fd4f196d68168b9b86fee52c32dfa50ec8c2d0c06e020c39046b45d5dbc8e240"
+    },
+    {
+      "epoch": 4,
+      "version": "v2",
+      "visual_text": "暂停开放",
+      "ax_static_text": [
+        "wc-a 公厕服务公告",
+        "暂停开放"
+      ],
+      "browser_clock_ms": 1813.5,
+      "captured_at": "2026-11-20T23:23:38.910Z",
+      "elapsed_ms": 1854,
+      "files": {
+        "screenshot": "epoch-4.png",
+        "dom": "epoch-4.html",
+        "ax_tree": "epoch-4.ax.json"
+      },
+      "screenshot_sha256": "5fcca3c2389e2fb40b7327af39f202a3eccdf5bb1cbb5de5ec66364b357eb748",
+      "dom_sha256": "1ac854c3bc10ee491563a03bba3c3d68864cdd37bebbc4d5d7993c69483cb091",
+      "ax_tree_sha256": "fd4f196d68168b9b86fee52c32dfa50ec8c2d0c06e020c39046b45d5dbc8e240"
+    }
+  ],
+  "gaps": [
+    {
+      "epoch": 1,
+      "reason": "epoch transition observed in-page but no intact bundle was sampled"
+    },
+    {
+      "epoch": 3,
+      "reason": "epoch transition observed in-page but no intact bundle was sampled"
+    }
+  ],
+  "torn": []
+}

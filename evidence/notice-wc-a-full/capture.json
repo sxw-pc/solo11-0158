@@ -1,0 +1,149 @@
+{
+  "schema": "notice-capture/v2",
+  "page": "file:///workspace/mock/notice.html",
+  "mode": "observer",
+  "facility_id": "wc-a",
+  "opening_version": 2,
+  "intended_text": "暂停开放",
+  "intended_version": "v2",
+  "declared_epoch_first": 1,
+  "declared_epoch_last": 4,
+  "observation_window_ms": {
+    "published_at": 300,
+    "observation_end": 2200
+  },
+  "captured_at": "2026-11-20T23:23:20.397Z",
+  "browser": {
+    "product": "Chrome/159.0.8154.6",
+    "revision": "@98a2592026af8d673b9fa83b626ac68bdf4ae78a",
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36",
+    "executable": "/home/node/.cache/ms-playwright/chromium-1255/chrome-linux-arm64/chrome"
+  },
+  "schedule": null,
+  "transitions": [
+    {
+      "version": "v2",
+      "epoch": "1",
+      "at": 313.7
+    },
+    {
+      "version": "v2",
+      "epoch": "2",
+      "at": 813.7
+    },
+    {
+      "version": "v2",
+      "epoch": "3",
+      "at": 1313.4
+    },
+    {
+      "version": "v2",
+      "epoch": "4",
+      "at": 1812.3
+    }
+  ],
+  "initial": {
+    "version": "v1",
+    "epoch": "0",
+    "at": 11.7
+  },
+  "monotonic": {
+    "ok": true,
+    "sequence": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "violations": []
+  },
+  "source_file": {
+    "name": "notice-source.json",
+    "sha256": "445a06776a14e5888787e2d0ef4cb9c970e1fd58c240089203ebf47deb8111db"
+  },
+  "frames": [
+    {
+      "epoch": 1,
+      "version": "v2",
+      "visual_text": "正常开放",
+      "ax_static_text": [
+        "wc-a 公厕服务公告",
+        "暂停开放"
+      ],
+      "browser_clock_ms": 337.7,
+      "captured_at": "2026-11-20T23:23:18.834Z",
+      "elapsed_ms": 359,
+      "files": {
+        "screenshot": "epoch-1.png",
+        "dom": "epoch-1.html",
+        "ax_tree": "epoch-1.ax.json"
+      },
+      "screenshot_sha256": "91209610da46daa6c55f14fddbfd9e8734af1b654c9a44e26fa040e138dc6a06",
+      "dom_sha256": "45f0f80cf0dd83c293cc8a5987781f3d265cbdd56a6e23d4c4c6d2eb0f99f8e4",
+      "ax_tree_sha256": "edeff8e6156651ac6a372c888b7641d8b8d910759b5095754f46fce0dab9226a"
+    },
+    {
+      "epoch": 2,
+      "version": "v2",
+      "visual_text": "暂停开放",
+      "ax_static_text": [
+        "wc-a 公厕服务公告",
+        "暂停开放"
+      ],
+      "browser_clock_ms": 826.5,
+      "captured_at": "2026-11-20T23:23:19.319Z",
+      "elapsed_ms": 844,
+      "files": {
+        "screenshot": "epoch-2.png",
+        "dom": "epoch-2.html",
+        "ax_tree": "epoch-2.ax.json"
+      },
+      "screenshot_sha256": "5fcca3c2389e2fb40b7327af39f202a3eccdf5bb1cbb5de5ec66364b357eb748",
+      "dom_sha256": "eef1e2f8a21ea66a3a236a49c83fc920f17375e69e2c5a38d0997c7b58b61c5d",
+      "ax_tree_sha256": "edeff8e6156651ac6a372c888b7641d8b8d910759b5095754f46fce0dab9226a"
+    },
+    {
+      "epoch": 3,
+      "version": "v2",
+      "visual_text": "正常开放",
+      "ax_static_text": [
+        "wc-a 公厕服务公告",
+        "暂停开放"
+      ],
+      "browser_clock_ms": 1333.2,
+      "captured_at": "2026-11-20T23:23:19.819Z",
+      "elapsed_ms": 1344,
+      "files": {
+        "screenshot": "epoch-3.png",
+        "dom": "epoch-3.html",
+        "ax_tree": "epoch-3.ax.json"
+      },
+      "screenshot_sha256": "91209610da46daa6c55f14fddbfd9e8734af1b654c9a44e26fa040e138dc6a06",
+      "dom_sha256": "f0df3e2158395606663906c0552fe23881340f99b6b690e66146a0bfd26f251d",
+      "ax_tree_sha256": "edeff8e6156651ac6a372c888b7641d8b8d910759b5095754f46fce0dab9226a"
+    },
+    {
+      "epoch": 4,
+      "version": "v2",
+      "visual_text": "暂停开放",
+      "ax_static_text": [
+        "wc-a 公厕服务公告",
+        "暂停开放"
+      ],
+      "browser_clock_ms": 1848.8,
+      "captured_at": "2026-11-20T23:23:20.353Z",
+      "elapsed_ms": 1878,
+      "files": {
+        "screenshot": "epoch-4.png",
+        "dom": "epoch-4.html",
+        "ax_tree": "epoch-4.ax.json"
+      },
+      "screenshot_sha256": "5fcca3c2389e2fb40b7327af39f202a3eccdf5bb1cbb5de5ec66364b357eb748",
+      "dom_sha256": "1ac854c3bc10ee491563a03bba3c3d68864cdd37bebbc4d5d7993c69483cb091",
+      "ax_tree_sha256": "edeff8e6156651ac6a372c888b7641d8b8d910759b5095754f46fce0dab9226a"
+    }
+  ],
+  "gaps": [],
+  "torn": []
+}
