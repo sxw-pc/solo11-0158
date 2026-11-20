@@ -96,6 +96,24 @@ class ServiceTest(unittest.TestCase):
         self.base();self.assertEqual(self.fixture('facility-import','facility-ok.json')[0]['result'],'file_replayed')
         with self.assertRaises(ValueError):self.events('facility-import',[{'id':'F1','kind':'facility','facility_id':'wc-a','zone':'other','stalls':9,'accessible':1,'opens':'08:00:00','closes':'20:00:00','version':2}])
         self.assertEqual(len(report(self.db)['source_file']),1)
+    def test_parallel_inventory_revision_is_not_silent_overwrite(self):
+        self.base()
+        self.events('facility-import',[{'id':'F2','kind':'facility','facility_id':'wc-a','zone':'block-b','stalls':8,'accessible':2,'opens':'08:00:00','closes':'20:00:00','version':1}])
+        r=report(self.db)
+        self.assertEqual(r['facility'][0]['zone'],'block-a')
+        self.assertEqual(r['decision_log'][-1]['state'],'version_conflict')
+    def test_short_supply_cannot_be_accepted_by_patrol(self):
+        self.base()
+        self.events('shift-import',[{'id':'C4','kind':'contract','facility_id':'wc-a','vendor':'clean','starts':'2026-04-01T08:00:00','ends':'2026-04-01T20:00:00','minutes':30,'minimum_supply':10,'remedy_minutes':120},
+          {'id':'S4','kind':'shift','contract_id':'C4','worker':'w','check_in':'2026-04-01T09:00:00','check_out':'2026-04-01T10:00:00','supply':1},
+          {'id':'P4','kind':'patrol','shift_id':'S4','inspector':'i','score':98,'at':'2026-04-01T10:10:00'}])
+        r=report(self.db)
+        self.assertEqual(r['shift'][0]['state'],'short')
+        self.assertEqual(r['patrol'][0]['state'],'invalid')
+    def test_unknown_facility_complaint_rolls_back(self):
+        with self.assertRaises(ValueError):
+            self.events('complaint-import',[{'id':'QU','kind':'complaint','facility_id':'missing','at':'2026-04-01T12:00:00','category':'water','reporter':'resident'}])
+        self.assertEqual(report(self.db)['event'],[])
     def test_raw_file_audit_detects_mutated_decision(self):
         self.base();self.fixture('shift-import','shift-ok.json');self.fixture('complaint-import','complaint-ok.json')
         self.assertTrue(audit(self.db,HANDLERS)['replay_ok'])

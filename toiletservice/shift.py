@@ -17,7 +17,7 @@ def evaluate(db,e):
     duration=(datetime.fromisoformat(e['check_out'])-datetime.fromisoformat(e['check_in'])).total_seconds()/60
     if duration<c['minutes']:return 'short','contract minutes not met'
     if int(e['supply'])<c['minimum_supply']:return 'short','minimum supply not met'
-    overlap=all_rows(db,"SELECT * FROM shift WHERE worker=? AND state IN ('accepted','pending_patrol') AND check_in<? AND check_out>?",
+    overlap=all_rows(db,"SELECT * FROM shift WHERE worker=? AND state NOT IN ('blocked','conflict') AND check_in<? AND check_out>?",
                      (e['worker'],e['check_out'],e['check_in']))
     if overlap:return 'conflict','worker booked at overlapping facility'
     opening=one(db,'SELECT * FROM opening WHERE facility_id=? ORDER BY id DESC LIMIT 1',(c['facility_id'],))
