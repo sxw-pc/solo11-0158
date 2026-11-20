@@ -2,11 +2,11 @@ from datetime import datetime
 from .store import one,all_rows,log
 
 def contract(db,e):
-    if e['starts']>=e['ends'] or int(e['minutes'])<=0 or int(e['minimum_supply'])<0:
+    if e['starts']>=e['ends'] or int(e['minutes'])<=0 or int(e['minimum_supply'])<0 or int(e['remedy_minutes'])<=0:
         raise ValueError('invalid contract time or threshold')
     if not one(db,'SELECT id FROM facility WHERE id=?',(e['facility_id'],)):raise ValueError('unknown facility')
-    db.execute('INSERT INTO contract(id,facility_id,vendor,starts,ends,minutes,minimum_supply) VALUES(?,?,?,?,?,?,?)',
-               (e['id'],e['facility_id'],e['vendor'],e['starts'],e['ends'],int(e['minutes']),int(e['minimum_supply'])))
+    db.execute('INSERT INTO contract(id,facility_id,vendor,starts,ends,minutes,minimum_supply,remedy_minutes) VALUES(?,?,?,?,?,?,?,?)',
+               (e['id'],e['facility_id'],e['vendor'],e['starts'],e['ends'],int(e['minutes']),int(e['minimum_supply']),int(e['remedy_minutes'])))
     log(db,'shift',e['id'],'contracted','coverage signed',e['id'])
     return 'contracted'
 

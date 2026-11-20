@@ -24,8 +24,13 @@ def verify(db,e):
     db.execute('INSERT INTO verification(id,complaint_id,inspector,at,confirmed,reason) VALUES(?,?,?,?,?,?)',
                (e['id'],e['complaint_id'],e['inspector'],e['at'],int(confirmed),reason))
     if confirmed:
-        deadline=(datetime.fromisoformat(e['at'])+timedelta(hours=2)).isoformat()
-        state='confirmed';detail='verified service defect; remedy due within two hours'
+        contracts=all_rows(db,'SELECT * FROM contract WHERE facility_id=? AND starts<=? AND ends>? ORDER BY starts DESC,id',
+                           (c['facility_id'],c['at'],c['at']))
+        if not contracts:
+            deadline=None;state='pending_contract';detail='verified defect but no covering service contract'
+        else:
+            deadline=(datetime.fromisoformat(e['at'])+timedelta(minutes=contracts[0]['remedy_minutes'])).isoformat()
+            state='confirmed';detail=f'verified defect; remedy due under contract {contracts[0]["id"]}'
     else:deadline=None;state='rejected';detail='independent verification did not confirm defect'
     db.execute('UPDATE complaint SET state=?,reason=?,due_at=? WHERE id=?',(state,detail,deadline,c['id']))
     log(db,'complaint',c['id'],state,detail,e['id'])
