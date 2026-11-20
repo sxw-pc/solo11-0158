@@ -4,13 +4,18 @@ from .store import one,all_rows,log
 def submit(db,e):
     f=one(db,'SELECT * FROM facility WHERE id=?',(e['facility_id'],))
     if not f:raise ValueError('unknown facility')
-    if not e.get('reporter') or e['category'] not in {'water','accessible','cleanliness','supply','stall'}:
+    if not e.get('reporter') or e['category'] not in {'water','accessible','cleanliness','supply','stall','notice'}:
         raise ValueError('reporter and known category required')
+    notice_case_id=e.get('notice_case_id')
+    if e['category']=='notice':
+        case=one(db,'SELECT * FROM notice_case WHERE id=?',(notice_case_id,))
+        if not case or case['facility_id']!=e['facility_id']:
+            raise ValueError('notice complaint needs a matching notice case')
     if not f['opens']<=e['at'][-8:]<f['closes']:
         state,reason='pending','reported outside published service hours'
     else:state,reason='pending','awaiting independent verification'
-    db.execute('INSERT INTO complaint(id,facility_id,at,category,reporter,state,reason) VALUES(?,?,?,?,?,?,?)',
-               (e['id'],e['facility_id'],e['at'],e['category'],e['reporter'],state,reason))
+    db.execute('INSERT INTO complaint(id,facility_id,at,category,reporter,state,reason,notice_case_id) VALUES(?,?,?,?,?,?,?,?)',
+               (e['id'],e['facility_id'],e['at'],e['category'],e['reporter'],state,reason,notice_case_id))
     log(db,'complaint',e['id'],state,reason,e['id'])
     return state
 
@@ -83,3 +88,21 @@ def reconcile_complaints(db,facility_id):
         if (c['category']=='water' and opening['state']=='closed') or (c['category']=='accessible' and opening['accessible_available']==0):
             db.execute("UPDATE complaint SET state='reopened',reason='facility evidence still shows defect' WHERE id=?",(c['id'],))
             log(db,'complaint',c['id'],'reopened','facility evidence still shows defect')
+
+def reconcile_notice(db,case_id,event_id=None):
+    case=one(db,'SELECT * FROM notice_case WHERE id=?',(case_id,))
+    review=one(db,'SELECT * FROM notice_review WHERE case_id=? ORDER BY at DESC,id DESC LIMIT 1',(case_id,))
+    if not case or not review:return
+    for c in all_rows(db,'SELECT * FROM complaint WHERE notice_case_id=?',(case_id,)):
+        if review['mismatch']:
+            contracts=all_rows(db,'SELECT * FROM contract WHERE facility_id=? AND starts<=? AND ends>? ORDER BY starts DESC,id',
+                               (c['facility_id'],c['at'],c['at']))
+            if contracts:
+                deadline=(datetime.fromisoformat(review['at'])+timedelta(minutes=contracts[0]['remedy_minutes'])).isoformat()
+                state,reason='confirmed','independent notice review found a mismatch'
+            else:
+                deadline=None;state,reason='pending_contract','notice mismatch without covering contract'
+        else:deadline=None;state,reason='rejected','independent notice review found alignment'
+        if (c['state'],c['reason'],c['due_at'])!=(state,reason,deadline):
+            db.execute('UPDATE complaint SET state=?,reason=?,due_at=? WHERE id=?',(state,reason,deadline,c['id']))
+            log(db,'complaint',c['id'],state,reason,event_id)

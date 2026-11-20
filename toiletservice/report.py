@@ -3,7 +3,7 @@ import json
 from .store import all_rows,connect
 from .source import ingest
 
-TABLES=['facility','defect','opening','contract','shift','patrol','complaint','verification','remedy','complaint_link','decision_log']
+TABLES=['facility','defect','opening','contract','shift','patrol','complaint','verification','remedy','complaint_link','notice_case','notice_review','decision_log']
 
 def report(db):
     result={table:[dict(row) for row in all_rows(db,f'SELECT * FROM {table} ORDER BY rowid')] for table in TABLES}
