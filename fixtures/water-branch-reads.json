@@ -1,0 +1,4 @@
+{"events":[
+{"id":"BR-A2","kind":"branch_read","anomaly_id":"AN2","facility_id":"wc-a","meter_id":"M-A","calibration_id":"CAL1","at":"2026-04-03T09:30:00","unit":"m3","value":5},
+{"id":"BR-B2","kind":"branch_read","anomaly_id":"AN2","facility_id":"wc-b","meter_id":"M-B","calibration_id":"CAL1","at":"2026-04-03T09:30:00","unit":"m3","value":2}
+]}

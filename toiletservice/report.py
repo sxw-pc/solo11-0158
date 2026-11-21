@@ -3,12 +3,16 @@ import json
 from .store import all_rows,connect
 from .source import ingest
 
-TABLES=['facility','defect','opening','contract','shift','patrol','complaint','verification','remedy','complaint_link','decision_log']
+TABLES=['facility','defect','opening','contract','shift','patrol','complaint','verification','remedy','complaint_link',
+        'water_calibration','water_meter','water_baseline','water_pipeline','water_anomaly','water_reading',
+        'water_test','water_witness','water_fault','water_fault_shift','decision_log']
 
 def report(db):
     result={table:[dict(row) for row in all_rows(db,f'SELECT * FROM {table} ORDER BY rowid')] for table in TABLES}
     result['source_file']=[dict(row) for row in all_rows(db,'SELECT id,command,sha FROM source_file ORDER BY id')]
     result['event']=[dict(row) for row in all_rows(db,'SELECT id,kind,sha FROM event ORDER BY rowid')]
+    from .water_witness import coverage
+    result['water_coverage']=coverage(db)
     return result
 
 def audit(db,handlers):

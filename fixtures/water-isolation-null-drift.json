@@ -1,0 +1,8 @@
+{"events":[
+{"id":"IT2","kind":"isolation_test","anomaly_id":"AN3","test_ref":"T-ISO-2","stage_revision":"r1","at":"2026-04-04T03:30:00","null_offset":1,"closure_revoked":false,"records":[
+{"stage":"null_start","test_ref":"T-ISO-2","stage_revision":"r1","calibration_id":"CAL1","unit":"m3","value":1},
+{"stage":"a_only","test_ref":"T-ISO-2","stage_revision":"r1","calibration_id":"CAL1","unit":"m3","value":6},
+{"stage":"b_only","test_ref":"T-ISO-2","stage_revision":"r1","calibration_id":"CAL1","unit":"m3","value":3},
+{"stage":"null_end","test_ref":"T-ISO-2","stage_revision":"r1","calibration_id":"CAL1","unit":"m3","value":2}
+]}
+]}

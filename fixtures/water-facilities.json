@@ -1,0 +1,4 @@
+{"events":[
+{"id":"F-A","kind":"facility","facility_id":"wc-a","zone":"block-a","stalls":4,"accessible":1,"opens":"08:00:00","closes":"20:00:00","version":1},
+{"id":"F-B","kind":"facility","facility_id":"wc-b","zone":"block-b","stalls":4,"accessible":1,"opens":"08:00:00","closes":"20:00:00","version":1}
+]}

@@ -1,0 +1,8 @@
+{"events":[
+{"id":"M-MAIN","kind":"meter","role":"master","unit":"m3","calibration_id":"CAL1","covers_from":"2026-04-01T00:00:00","covers_to":"2026-04-30T23:59:59","version":1},
+{"id":"M-A","kind":"meter","role":"branch","master_id":"M-MAIN","facility_id":"wc-a","unit":"m3","calibration_id":"CAL1","covers_from":"2026-04-01T00:00:00","covers_to":"2026-04-30T23:59:59","version":1},
+{"id":"M-B","kind":"meter","role":"branch","master_id":"M-MAIN","facility_id":"wc-b","unit":"m3","calibration_id":"CAL1","covers_from":"2026-04-01T00:00:00","covers_to":"2026-04-30T23:59:59","version":1},
+{"id":"BL-A","kind":"baseline","facility_id":"wc-a","master_id":"M-MAIN","expected_use":2,"unit":"m3","period_from":"2026-04-01T00:00:00","period_to":"2026-04-30T23:59:59","version":1},
+{"id":"BL-B","kind":"baseline","facility_id":"wc-b","master_id":"M-MAIN","expected_use":2,"unit":"m3","period_from":"2026-04-01T00:00:00","period_to":"2026-04-30T23:59:59","version":1},
+{"id":"PL-1","kind":"pipeline","master_id":"M-MAIN","facility_ids":["wc-a","wc-b"],"shared":true,"version":1}
+]}

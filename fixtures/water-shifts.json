@@ -1,0 +1,6 @@
+{"events":[
+{"id":"WC1","kind":"contract","facility_id":"wc-a","vendor":"clean-team","starts":"2026-04-03T08:00:00","ends":"2026-04-03T20:00:00","minutes":60,"minimum_supply":1,"remedy_minutes":120},
+{"id":"WS1","kind":"shift","contract_id":"WC1","worker":"worker-a","check_in":"2026-04-03T09:00:00","check_out":"2026-04-03T10:30:00","supply":2},
+{"id":"WC2","kind":"contract","facility_id":"wc-b","vendor":"clean-team","starts":"2026-04-03T08:00:00","ends":"2026-04-03T20:00:00","minutes":60,"minimum_supply":1,"remedy_minutes":120},
+{"id":"WS2","kind":"shift","contract_id":"WC2","worker":"worker-b","check_in":"2026-04-03T09:00:00","check_out":"2026-04-03T10:30:00","supply":2}
+]}

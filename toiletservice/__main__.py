@@ -4,12 +4,16 @@ import json
 from pathlib import Path
 from .store import connect
 from .source import read_file,ingest
-from . import facility,shift,complaint,report
+from . import facility,shift,complaint,report,water_witness
 
 HANDLERS={
  'facility-import':{'facility':facility.register,'defect':facility.defect,'repair':facility.repair},
  'shift-import':{'contract':shift.contract,'shift':shift.shift,'patrol':shift.patrol},
  'complaint-import':{'complaint':complaint.submit,'verify':complaint.verify,'remedy':complaint.remedy},
+ 'water-import':{'calibration':water_witness.calibration,'meter':water_witness.meter,
+                 'baseline':water_witness.baseline,'pipeline':water_witness.pipeline,
+                 'anomaly':water_witness.anomaly,'branch_read':water_witness.branch_read,
+                 'isolation_test':water_witness.isolation_test},
 }
 
 def import_file(db,command,path):

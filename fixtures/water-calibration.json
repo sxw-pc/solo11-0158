@@ -1,0 +1,4 @@
+{"events":[
+{"id":"CAL1","kind":"calibration","unit":"m3","issued_at":"2026-03-01T00:00:00","version":1},
+{"id":"CAL2","kind":"calibration","unit":"m3","issued_at":"2026-05-01T00:00:00","version":2}
+]}
